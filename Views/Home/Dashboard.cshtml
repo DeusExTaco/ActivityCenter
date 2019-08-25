@@ -1,0 +1,68 @@
+@{
+    ViewData["Title"] = "Dashboard";
+}
+
+@model List<Event>
+
+<div>
+    <div class="row">
+        <div class="col-md-9">
+            <h2>Dojo Activity Center</h2>
+        </div>
+        <div class="col-md-3">
+            <div class="col text-right"> 
+                <p>Welcome, @ViewBag.User.FirstName </p>
+            </div>
+            <div class="col text-right">
+                <a href="/logout">Logout</a>
+            </div>
+        </div>
+    </div>
+    <table class="table table-hover mt-3">
+        <thead class="bg-primary text-white">
+            <th>Activity</th>
+            <th>Date and Time</th>
+            <th>Duration</th>
+            <th>Event Coordinator</th>
+            <th>Participants</th>
+            <th>Actions</th>
+        </thead>
+        <tbody>
+            @foreach (var z in Model)
+            {
+                <tr>
+                    <td><a href="/details/@z.EventId">@z.EventTitle</a></td>
+                    <td>@z.Date.ToString("MMM dd, yyyy") @z.Time.ToString("hh:mm tt")</td>
+                    <td>@z.Duration @z.DurationUnits</td>
+                    <td>@z.Creator.FirstName</td>
+                    <td>@z.Participants.Count()</td>
+                    
+                    @if (@ViewBag.User.UserId == @z.Creator.UserId)
+                    {
+                        <td><a href="/delete/@z.EventId" class="btn btn-primary">Delete</a></td>
+                    }
+                    else
+                    {
+                        if (@z.Participants.Any(p => p.UserId == @ViewBag.User.UserId))
+                        {
+                            <td>
+                                <form asp-action="leaveEvent" asp-controller="Home" asp-route-eventId="@z.EventId" asp-route-userId="@ViewBag.User.UserId" method="post">
+                                    <button type="submit" class="btn btn-primary mb-2">Leave</button>
+                                </form>
+                            </td>
+                        }
+                        else 
+                        {
+                            <td>
+                                <form asp-action="joinEvent" asp-controller="Home" asp-route-eventId="@z.EventId" asp-route-userId="@ViewBag.User.UserId" method="post">
+                                    <button type="submit" class="btn btn-primary mb-2">Join</button>
+                                </form>
+                            </td>
+                        }
+                    }
+                </tr>
+            }
+        </tbody>
+    </table>
+    <a href="/new" class="btn btn-primary">New Activity</a>
+</div>

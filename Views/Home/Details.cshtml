@@ -1,0 +1,36 @@
+@{
+    ViewData["Title"] = "Event Details";
+}
+
+@model Event
+
+<div>
+    <div class="row">
+        <div class="col-md-9">
+            <h2>Dojo Activity Center</h2>
+        </div>
+        <div class="col-md-3 text-right">
+            <a href="/dashboard">Home</a> | <a href="/logout"> Logout</a>
+        </div>
+    </div>
+    <div class="mt-5">
+        <h2>@Model.EventTitle</h2>
+    </div>
+    <div class="mt-5">
+        <h4>Event Coordinator: @Model.Creator.FirstName </h4>
+        <h6>Date: @Model.Date.ToString("MMM dd, yyyy")</h6>
+    </div>
+    <div class="mt-5">
+        <h4>Description:</h4>
+        <p>@Model.Description</p>
+    </div>
+    <div class="mt-5">
+        <h4>Participants:</h4>
+        @foreach (var x in Model.Participants)
+        {
+            <ul>
+                <li>@x.User.FirstName @x.User.LastName</li>
+            </ul>
+        }
+    </div>
+</div>
