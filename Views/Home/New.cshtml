@@ -10,35 +10,43 @@
             <h2>Dojo Activity Center</h2>
         </div>
         <div class="col-md-3 text-right">
-                <a href="/dashboard">Home</a> | <a href="/logout"> Logout</a>
+            <a href="/dashboard">Home</a> | <a href="/logout"> Logout</a>
         </div>
     </div>
-    <form asp-action="addEvent" asp-controller="Home" method="post">
-        
+    <form asp-action="AddEvent" asp-controller="Home" method="post">
+
         <div class="form-group">
             <input type="hidden" asp-for="UserId" value="@ViewBag.User.UserId" class="form-control">
         </div>
-        
+
         <div class="form-group">
-            <small><span asp-validation-for="EventTitle" class="form-text text-danger"></span></small>
+            <small>
+                <span asp-validation-for="EventTitle" class="form-text text-danger"></span>
+            </small>
             <label asp-for="EventTitle">Event Title</label>
             <input type="text" asp-for="EventTitle" class="form-control">
         </div>
-        
+
         <div class="form-group">
-            <small><span asp-validation-for="Date" class="form-text text-danger"></span></small>
+            <small>
+                <span asp-validation-for="Date" class="form-text text-danger"></span>
+            </small>
             <label asp-for="Date">Event Date</label>
             <input type="date" asp-for="Date" class="form-control">
         </div>
-        
+
         <div class="form-group">
-            <small><span asp-validation-for="Time" class="form-text text-danger"></span></small>
+            <small>
+                <span asp-validation-for="Time" class="form-text text-danger"></span>
+            </small>
             <label asp-for="Time">Event Time</label>
             <input type="time" asp-for="Time" class="form-control">
         </div>
 
         <div class="form-group">
-            <small><span asp-validation-for="Duration" class="form-text text-danger"></span></small>
+            <small>
+                <span asp-validation-for="Duration" class="form-text text-danger"></span>
+            </small>
             <label asp-for="Duration">Duration</label>
             <input type="number" asp-for="Duration" class="form-control">
         </div>
@@ -52,13 +60,15 @@
         </div>
 
         <div class="form-group">
-            <small><span asp-validation-for="Description" class="form-text text-danger"></span></small>
+            <small>
+                <span asp-validation-for="Description" class="form-text text-danger"></span>
+            </small>
             <label asp-for="Description">Description</label>
             <textarea asp-for="Description" class="form-control" rows="3"></textarea>
         </div>
-        
+
         <button type="submit" class="btn btn-primary mb-2">Create</button>
-        
+
         <a href="/dashboard" class="btn btn-primary mb-2">Cancel</a>
     </form>
 </div>

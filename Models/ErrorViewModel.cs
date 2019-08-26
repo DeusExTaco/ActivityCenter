@@ -1,5 +1,3 @@
-using System;
-
 namespace ActivityCenter.Models
 {
     public class ErrorViewModel
