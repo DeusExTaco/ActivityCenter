@@ -23,6 +23,7 @@ namespace ActivityCenter.Models
         public DateTime Date { get; set; }
 
         [Required]
+        [NotMapped]
         [Column("time", TypeName = "DATETIME")]
         public DateTime Time { get; set; }
 
@@ -41,6 +42,12 @@ namespace ActivityCenter.Models
 
         [Column("updated_at", TypeName = "DATETIME")]
         public DateTime UpdatedAt { get; set; } = DateTime.Now;
+
+        [Column("end_date", TypeName = "DATETIME")]
+        public DateTime EndDate { get; set; }
+
+        [Column("normalized_duration", TypeName = "INT")]
+        public int NormalizedDuration { get; set; }
 
         public User Creator { get; set; }
 

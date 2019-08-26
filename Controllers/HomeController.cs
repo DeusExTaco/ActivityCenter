@@ -83,6 +83,7 @@ namespace ActivityCenter.Controllers
             var dashboardInput = DbContext
                 .Events
                 .Include(p => p.Participants)
+                .ThenInclude(u => u.Event)
                 .Include(c => c.Creator)
                 .OrderByDescending(a => a.CreatedAt)
                 .Where(e => e.Date >= DateTime.Today)
@@ -90,6 +91,17 @@ namespace ActivityCenter.Controllers
             var user = HttpContext.Session.GetInt32("UserId");
             ViewBag.User = DbContext.Users.FirstOrDefault(u => u.UserId == user);
             return View(dashboardInput);
+        }
+
+        public static bool IsOverlap(Event value1, Event value2)
+        {
+
+            if (value2.Date == value1.Date)
+            {
+                return true;
+            }
+
+            return false;
         }
 
         [HttpGet("/new")]
@@ -109,8 +121,22 @@ namespace ActivityCenter.Controllers
                 var finalTime = Convert.ToDateTime(newTime);
 
                 newEvent.Date = finalTime;
-                newEvent.Time = finalTime;
+                
+                switch (newEvent.DurationUnits)
+                {
+                    case "days":
+                        newEvent.NormalizedDuration = newEvent.Duration * 1440;
+                        break;
+                    case "hours":
+                        newEvent.NormalizedDuration = newEvent.Duration * 60;
+                        break;
+                    default:
+                        newEvent.NormalizedDuration = newEvent.Duration;
+                        break;
+                }
 
+                newEvent.EndDate = newEvent.Date.AddMinutes(newEvent.NormalizedDuration);
+                
                 DbContext.Add(newEvent);
                 DbContext.SaveChanges();
                 var temp = newEvent.EventId;

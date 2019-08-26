@@ -1,6 +1,7 @@
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.Text.RegularExpressions;
+using Microsoft.EntityFrameworkCore;
 
 namespace ActivityCenter.Models
 {
