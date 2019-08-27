@@ -93,17 +93,6 @@ namespace ActivityCenter.Controllers
             return View(dashboardInput);
         }
 
-        public static bool IsOverlap(Event value1, Event value2)
-        {
-
-            if (value2.Date == value1.Date)
-            {
-                return true;
-            }
-
-            return false;
-        }
-
         [HttpGet("/new")]
         public IActionResult NewEvent()
         {
@@ -121,7 +110,7 @@ namespace ActivityCenter.Controllers
                 var finalTime = Convert.ToDateTime(newTime);
 
                 newEvent.Date = finalTime;
-                
+
                 switch (newEvent.DurationUnits)
                 {
                     case "days":
@@ -136,7 +125,7 @@ namespace ActivityCenter.Controllers
                 }
 
                 newEvent.EndDate = newEvent.Date.AddMinutes(newEvent.NormalizedDuration);
-                
+
                 DbContext.Add(newEvent);
                 DbContext.SaveChanges();
                 var temp = newEvent.EventId;
@@ -167,9 +156,11 @@ namespace ActivityCenter.Controllers
                 .ThenInclude(z => z.User)
                 .FirstOrDefault(e => e.EventId == eventId);
 
+            var user = HttpContext.Session.GetInt32("UserId");
+            ViewBag.User = DbContext.Users.FirstOrDefault(u => u.UserId == user);
+
             return View(anEvent);
         }
-
 
         [HttpPost("/join")]
         public IActionResult JoinEvent(int eventId, int userId)

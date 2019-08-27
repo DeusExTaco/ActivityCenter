@@ -33,4 +33,12 @@
             </ul>
         }
     </div>
+    <div class="mt-5">
+        @if (ViewBag.User.UserId != Model.Creator.UserId && !Model.Participants.Any(p => p.UserId == ViewBag.User.UserId && p.EventId == Model.EventId))
+        {
+            <form asp-action="JoinEvent" asp-controller="Home" asp-route-eventId="@Model.EventId" asp-route-userId="@ViewBag.User.UserId" method="post">
+                <button type="submit" class="btn btn-primary mb-2">Join</button>
+            </form>
+        }
+    </div>
 </div>

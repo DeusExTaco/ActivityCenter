@@ -7,14 +7,14 @@ namespace ActivityCenter.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.RenameColumn(
-                name: "time",
-                table: "Events",
-                newName: "end_date");
+                "time",
+                "Events",
+                "end_date");
 
             migrationBuilder.AddColumn<int>(
-                name: "normalized_duration",
-                table: "Events",
-                type: "INT",
+                "normalized_duration",
+                "Events",
+                "INT",
                 nullable: false,
                 defaultValue: 0);
         }
@@ -22,13 +22,13 @@ namespace ActivityCenter.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropColumn(
-                name: "normalized_duration",
-                table: "Events");
+                "normalized_duration",
+                "Events");
 
             migrationBuilder.RenameColumn(
-                name: "end_date",
-                table: "Events",
-                newName: "time");
+                "end_date",
+                "Events",
+                "time");
         }
     }
 }

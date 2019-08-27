@@ -1,7 +1,6 @@
 @{
     ViewData["Title"] = "Dashboard";
 }
-
 @model List<Event>
 
 <div>
@@ -45,24 +44,21 @@
                         <a href="/delete/@z.EventId" class="btn btn-primary">Delete</a>
                     </td>
                 }
+                else if (z.Participants.Any(p => p.UserId == ViewBag.User.UserId))
+                {
+                    <td>
+                        <form asp-action="LeaveEvent" asp-controller="Home" asp-route-eventId="@z.EventId" asp-route-userId="@ViewBag.User.UserId" method="post">
+                            <button type="submit" class="btn btn-primary mb-2">Leave</button>
+                        </form>
+                    </td>
+                }
                 else
                 {
-                    if (z.Participants.Any(p => p.UserId == ViewBag.User.UserId))
-                    {
-                        <td>
-                            <form asp-action="LeaveEvent" asp-controller="Home" asp-route-eventId="@z.EventId" asp-route-userId="@ViewBag.User.UserId" method="post">
-                                <button type="submit" class="btn btn-primary mb-2">Leave</button>
-                            </form>
-                        </td>
-                    }
-                    else
-                    {
-                        <td>
-                            <form asp-action="JoinEvent" asp-controller="Home" asp-route-eventId="@z.EventId" asp-route-userId="@ViewBag.User.UserId" method="post">
-                                <button type="submit" class="btn btn-primary mb-2">Join</button>
-                            </form>
-                        </td>
-                    }
+                    <td>
+                        <form asp-action="JoinEvent" asp-controller="Home" asp-route-eventId="@z.EventId" asp-route-userId="@ViewBag.User.UserId" method="post">
+                            <button type="submit" class="btn btn-primary mb-2">Join</button>
+                        </form>
+                    </td>
                 }
             </tr>
         }
